@@ -1,0 +1,22 @@
+
+<div id="onlineUsers" class="list-group pre-scrollable border-dash" style="width:25%;max-height: 600px;border-radius:20px;float: left;">
+ 	<a href="#" class="list-group-item" ng-repeat="(key, value) in users">{{key}}</a>
+</div>
+<style>
+	#onlineUsers::-webkit-scrollbar { 
+    	display: none; 
+	}
+	.border-dash {
+        border: 10px dashed #ddd;
+		box-shadow: 0 0 0 3px #fff, 0 0 0 5px #ddd, 0 0 0 10px #fff, 0 0 2px 10px #eee;
+	}
+</style>
+<script>
+	$( "#brand" ).click(function() {
+		if ( $( "#onlineUsers" ).is( ":hidden" ) ) {
+		    $( "#onlineUsers" ).show( "slow" );
+		} else {
+	    	$( "#onlineUsers" ).slideUp();
+	  	}
+	});
+</script>

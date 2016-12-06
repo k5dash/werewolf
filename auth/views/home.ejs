@@ -1,0 +1,57 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html ng-app="Home">
+<head>
+	<meta http-equiv='cache-control' content='no-cache'>
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
+	<link rel="icon" type="image/gif/png" href="https://s-media-cache-ak0.pinimg.com/originals/5b/d5/13/5bd513a38992483ebde8888dd3f01e8f.jpg">
+	<title>One Night Ultimate Werewolf</title>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+</head>
+
+
+<body style="background-repeat:no-repeat;background-size:100%;background-position:center;background:url(https://images4.alphacoders.com/102/102848.jpg)" ng-controller="HomeController">
+	<% include template/banner.ejs %>
+	<div style="width:100%;display:inline-block">
+	<% include template/lobbyList.ejs %>
+	<% include template/chatBox.ejs %>
+	</div>
+</body>
+
+
+</html>
+
+<script>
+			/*
+			$scope.getUsers = function() {
+            	$http.get("onlineusers")
+			    .then(function(response) {
+			        $scope.users = response.data;
+			    });
+          	};
+          	$scope.getUsers();
+			$interval($scope.getUsers, 10000);
+			*/
+
+		var socket = io();
+		angular.module('Home', []).controller('HomeController', ['$scope', '$interval', '$http', function($scope,$interval,$http) {
+			$scope.tagline = 'The square root of life is pi!';
+			$scope.users = {};
+			var userID = $('#userID').html();
+			socket.emit('user online', userID);
+			socket.on('user list', function(msg){
+				$scope.users = msg;
+				$scope.$apply();
+			});
+		}]);
+</script>
+
+
